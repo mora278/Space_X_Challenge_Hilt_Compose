@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Space X Challenge</string>
+    <string name="back">Back</string>
+    <string name="open_article">Open article</string>
+    <string name="description">Description</string>
+    <string name="no_description">No description</string>
+    <string name="no_media">No media</string>
+    <string name="media">Media</string>
+</resources>
