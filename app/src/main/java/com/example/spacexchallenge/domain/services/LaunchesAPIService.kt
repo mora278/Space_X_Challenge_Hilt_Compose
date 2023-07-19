@@ -1,6 +1,6 @@
 package com.example.spacexchallenge.domain.services
 
-import com.example.spacexchallenge.data.api.APIResult
+import com.example.spacexchallenge.domain.models.APIResult
 import com.example.spacexchallenge.domain.models.LaunchInfo
 
 interface LaunchesAPIService {

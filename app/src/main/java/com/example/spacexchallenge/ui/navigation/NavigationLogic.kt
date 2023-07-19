@@ -7,8 +7,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.example.spacexchallenge.ui.viewhome.HomePage
-import com.example.spacexchallenge.ui.viewlaunchdetails.LaunchDetailsPage
+import com.example.spacexchallenge.ui.screens.HomeScreens
+import com.example.spacexchallenge.ui.screens.LaunchDetailsScreens
 
 @Composable
 fun NavigationView() {
@@ -34,7 +34,7 @@ private fun NavGraphBuilder.composableForHome(
     composable(
         route = NavigationRoutes.HomeRoute.route,
         content = {
-            HomePage(
+            HomeScreens(
                 onClick = { navigate(it) }
             )
         }
@@ -51,7 +51,7 @@ private fun NavGraphBuilder.composableForLaunchDetails(
         }),
         content = { backStackEntry ->
             val launchId = backStackEntry.arguments?.getString(NavigationRoutes.LAUNCH_ID) ?: ""
-            LaunchDetailsPage(
+            LaunchDetailsScreens(
                 launchId = launchId,
                 onClickBack = onBackPress
             )

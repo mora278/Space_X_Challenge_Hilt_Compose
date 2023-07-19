@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="launch_info"
+            type="com.example.spacexchallenge.domain.models.LaunchInfo"/>
+
+        <variable
+            name="launch_details_view_model"
+            type="com.example.spacexchallenge.ui.viewmodels.LaunchDetailsViewModel" />
+
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?android:attr/actionBarSize"
+            app:navigationIcon="@drawable/baseline_arrow_back_ios_24"
+            app:title="@string/back"/>
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="?android:attr/actionBarSize"
+            android:fillViewport="true">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingVertical="@dimen/item_margin_vertical">
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/header_card_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginHorizontal="@dimen/item_margin_horizontal"
+                    app:cardCornerRadius="6dp"
+                    app:cardElevation="4dp"
+                    app:layout_constraintDimensionRatio="H,1:1"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:contentDescription="@null"
+                        android:scaleType="centerCrop"
+                        app:urlImage="@{launch_info.urlForHeader}" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/item_margin_info"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/icon"
+                            android:layout_width="@dimen/image_size"
+                            android:layout_height="@dimen/image_size"
+                            android:contentDescription="@null"
+                            app:urlImage="@{launch_info.urlPatch}"
+                            tools:src="@drawable/image_not_supported_24" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/item_margin_info"
+                            android:orientation="vertical"
+                            android:weightSum="2">
+
+                            <TextView
+                                android:id="@+id/title"
+                                style="@style/TextAppearance.Material3.TitleMedium"
+                                android:layout_width="wrap_content"
+                                android:layout_height="0dp"
+                                android:layout_weight="1"
+                                android:text="@{launch_info.name}"
+                                tools:text="Testing" />
+
+                            <TextView
+                                android:id="@+id/subtitle"
+                                style="@style/TextAppearance.Material3.BodyMedium"
+                                android:layout_width="wrap_content"
+                                android:layout_height="0dp"
+                                android:layout_weight="1"
+                                android:text="@{launch_info.date}"
+                                tools:text="06/nov/24 - 15:30:25" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <Button
+                    android:id="@+id/open_article"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/item_margin_horizontal"
+                    android:layout_marginTop="@dimen/item_margin_info"
+                    android:onClick="@{() -> launch_details_view_model.openWebFromURI(launch_info.urlArticle)}"
+                    android:text="@string/open_article"
+                    android:textColor="@color/design_default_color_primary"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/header_card_view" />
+
+                <TextView
+                    android:id="@+id/description_title"
+                    style="@style/StyleLaunchDetailsTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/item_margin_horizontal"
+                    android:layout_marginTop="@dimen/item_margin_info"
+                    app:defaultTextValue="@{@string/no_description}"
+                    app:isTextValueAvailable="@{launch_info.isDetailsAvailable}"
+                    app:layout_constraintTop_toBottomOf="@id/open_article"
+                    app:textValueTarget="@{@string/description}"
+                    tools:text="@string/media" />
+
+                <TextView
+                    android:id="@+id/description_content"
+                    style="@style/StyleLaunchDetailsContent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/item_margin_horizontal"
+                    android:layout_marginTop="@dimen/item_margin_info"
+                    android:text="@{launch_info.details}"
+                    app:layout_constraintTop_toBottomOf="@id/description_title"
+                    tools:text="Example" />
+
+                <TextView
+                    android:id="@+id/media_title"
+                    style="@style/StyleLaunchDetailsTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/item_margin_horizontal"
+                    android:layout_marginTop="@dimen/item_margin_info"
+                    app:defaultTextValue="@{@string/no_media}"
+                    app:isTextValueAvailable="@{launch_info.isMediaAvailable}"
+                    app:layout_constraintTop_toBottomOf="@id/description_content"
+                    app:textValueTarget="@{@string/media}"
+                    tools:text="@string/media" />
+
+                <LinearLayout
+                    android:id="@+id/photos_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layoutId="@{@layout/item_list_photo}"
+                    app:layout_constraintTop_toBottomOf="@id/media_title"
+                    app:urlPhotos="@{launch_info.urlPhotos}" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+    </FrameLayout>
+
+</layout>

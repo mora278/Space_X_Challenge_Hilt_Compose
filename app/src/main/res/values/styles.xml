@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <style name="StyleLaunchDetailsTitle" parent="@style/TextAppearance.Material3.TitleLarge">
+        <item name="android:textColor">@color/design_default_color_primary_variant</item>
+        <item name="android:textSize">26sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="StyleLaunchDetailsContent" parent="@style/TextAppearance.Material3.BodyMedium">
+        <item name="android:justificationMode" tools:targetApi="o">inter_word</item>
+    </style>
+</resources>

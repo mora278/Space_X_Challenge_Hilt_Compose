@@ -12,7 +12,6 @@ interface RetrofitService {
     @GET("launches/{launchId}")
     suspend fun getLaunchById(@Path("launchId") launchId: String): Response<LaunchDTO>
 
-    @JvmSuppressWildcards
     @POST("launches/query")
-    suspend fun getLaunchesByPage(@Body body: Map<String, Any>): Response<PostResponseDTO>
+    suspend fun getLaunchesByPage(@Body body: TestOptionsBody): Response<PostResponseDTO>
 }
