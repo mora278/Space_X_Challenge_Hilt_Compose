@@ -5,8 +5,8 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.example.spacexchallenge.domain.models.LaunchInfo
+import com.example.spacexchallenge.domain.models.UIState
 import com.example.spacexchallenge.domain.usecases.GetHomeUseCase
-import com.example.spacexchallenge.ui.states.HomeUIStates
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.async
@@ -20,22 +20,23 @@ class HomeViewModel @Inject constructor(
     private val getHomeUseCases: GetHomeUseCase
 ) : ViewModel() {
     private val _jobHomeUIState: Job
-    private val _homeUIState: MutableStateFlow<HomeUIStates> =
-        MutableStateFlow(HomeUIStates.Loading)
-    val homeUIState: StateFlow<HomeUIStates> = _homeUIState
+    private val _homeUIState: MutableStateFlow<UIState<StateFlow<PagingData<LaunchInfo>>>> =
+        MutableStateFlow(UIState.Loading)
+    val homeUIState: StateFlow<UIState<StateFlow<PagingData<LaunchInfo>>>> = _homeUIState
 
     private val _launchesPagingData: MutableStateFlow<PagingData<LaunchInfo>> =
         MutableStateFlow(PagingData.empty())
+    val launchesPagingData: StateFlow<PagingData<LaunchInfo>> = _launchesPagingData
 
     init {
         _jobHomeUIState = viewModelScope.async { loadData() }
     }
 
     private suspend fun loadData() {
-        _homeUIState.emit(HomeUIStates.Success(_launchesPagingData))
+        _homeUIState.emit(UIState.Success(_launchesPagingData))
         getHomeUseCases.invoke().cachedIn(viewModelScope)
             .catch {
-                it.message?.let { errorMessage -> _homeUIState.emit(HomeUIStates.Error(errorMessage)) }
+                it.message?.let { errorMessage -> _homeUIState.emit(UIState.Error(errorMessage)) }
             }.collect {
                 _launchesPagingData.emit(it)
             }

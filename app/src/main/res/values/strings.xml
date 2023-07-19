@@ -6,4 +6,6 @@
     <string name="no_description">No description</string>
     <string name="no_media">No media</string>
     <string name="media">Media</string>
+    <string name="home">Home</string>
+    <string name="launch_details">Launch details</string>
 </resources>

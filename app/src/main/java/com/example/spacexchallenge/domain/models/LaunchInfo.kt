@@ -8,4 +8,11 @@ data class LaunchInfo(
     val urlPatch: String,
     val urlArticle: String,
     val urlPhotos: List<String>
-)
+) {
+    val urlForHeader: String
+        get() = urlPhotos.lastOrNull() ?: ""
+    val isDetailsAvailable: Boolean
+        get() = details.isBlank().not()
+    val isMediaAvailable: Boolean
+        get() = urlPhotos.isNotEmpty()
+}

@@ -1,7 +1,7 @@
 package com.example.spacexchallenge.data.api.retrofit
 
-import com.example.spacexchallenge.data.api.APIResult
-import com.example.spacexchallenge.data.utils.Mapper.toDomain
+import com.example.spacexchallenge.domain.models.APIResult
+import com.example.spacexchallenge.domain.utils.Mapper.toDomain
 import com.example.spacexchallenge.domain.models.LaunchInfo
 import com.example.spacexchallenge.domain.services.LaunchesAPIService
 import kotlinx.coroutines.Dispatchers

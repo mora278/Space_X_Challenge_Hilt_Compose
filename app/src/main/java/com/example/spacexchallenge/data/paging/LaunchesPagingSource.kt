@@ -2,11 +2,12 @@ package com.example.spacexchallenge.data.paging
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.example.spacexchallenge.data.repositories.LaunchesRepository
+import com.example.spacexchallenge.domain.models.APIResult
 import com.example.spacexchallenge.domain.models.LaunchInfo
+import com.example.spacexchallenge.domain.services.LaunchesAPIService
 
 class LaunchesPagingSource(
-    private val launchesRepository: LaunchesRepository
+    private val launchesAPIService: LaunchesAPIService
 ) : PagingSource<Int, LaunchInfo>() {
     override fun getRefreshKey(state: PagingState<Int, LaunchInfo>): Int? {
         return state.anchorPosition?.let { anchorPosition ->
@@ -18,14 +19,17 @@ class LaunchesPagingSource(
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, LaunchInfo> {
         return try {
             val page = params.key ?: 1
-            val launches = launchesRepository.getLaunchByPage(page)
-            LoadResult.Page(
-                data = launches,
-                prevKey = null,
-                nextKey = if (launches.isEmpty()) null else page.inc()
-            )
+            when(val result = launchesAPIService.getLaunchByPage(page)) {
+                is APIResult.Error -> throw Throwable(result.message)
+                is APIResult.Success -> {
+                    LoadResult.Page(
+                        data = result.data,
+                        prevKey = null,
+                        nextKey = if (result.data.isEmpty()) null else page.inc()
+                    )
+                }
+            }
         } catch (e: Exception) {
-            println("Error: $e")
             LoadResult.Error(e)
         }
     }

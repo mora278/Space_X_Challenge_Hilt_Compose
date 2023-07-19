@@ -1,15 +1,19 @@
 package com.example.spacexchallenge.domain.usecases
 
-import com.example.spacexchallenge.data.repositories.LaunchesRepository
+import com.example.spacexchallenge.domain.models.APIResult
 import com.example.spacexchallenge.domain.models.LaunchInfo
+import com.example.spacexchallenge.domain.services.LaunchesAPIService
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class GetLaunchDetailsUseCase @Inject constructor(
-    private val launchesRepository: LaunchesRepository
+    private val launchesAPIService: LaunchesAPIService
 ) {
     suspend operator fun invoke(launchId: String): Flow<LaunchInfo> = flow {
-        emit(launchesRepository.getLaunchById(launchId))
+        when (val result = launchesAPIService.getLaunchById(launchId)) {
+            is APIResult.Error -> throw Throwable(result.message)
+            is APIResult.Success -> emit(result.data)
+        }
     }
 }

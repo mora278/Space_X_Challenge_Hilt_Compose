@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_nav_graph"
+    app:startDestination="@id/fragment_home_route">
+
+    <fragment
+        android:id="@+id/fragment_home_route"
+        android:name="com.example.spacexchallenge.ui.xml.fragments.HomeFragment"
+        android:label="@string/home"
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_home_to_launch_details"
+            app:destination="@id/fragment_launch_details_route"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right">
+            <argument
+                android:name="launchId"
+                app:argType="string" />
+        </action>
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragment_launch_details_route"
+        android:name="com.example.spacexchallenge.ui.xml.fragments.LaunchDetailsFragment"
+        android:label="@string/launch_details"
+        tools:layout="@layout/fragment_launch_details">
+        <argument
+            android:name="launchId"
+            android:defaultValue=""
+            app:argType="string" />
+    </fragment>
+
+</navigation>
